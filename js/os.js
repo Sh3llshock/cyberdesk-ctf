@@ -231,7 +231,7 @@
     ov.innerHTML =
       '<div id="lk-time"></div>' +
       '<form class="lk-card" autocomplete="off">' +
-      '<div class="lk-ava">🐕</div>' +
+      '<div class="lk-ava"><img src="assets/img/lock-avatar.png" alt=""></div>' +
       '<div class="lk-user">Jake</div>' +
       '<div class="lk-host">cyberdesk · Kali GNU/Linux</div>' +
       '<input class="lk-input lk-u" placeholder="username" spellcheck="false" value="">' +
