@@ -1,0 +1,11 @@
+# Whitelist: only the public student site is ever committed.
+# Everything else in this folder (teacher guide with flags, build notes,
+# unrelated projects, local config) stays private.
+/*
+!/.gitignore
+!/.nojekyll
+!/README.md
+!/index.html
+!/css/
+!/js/
+!/assets/

@@ -1,0 +1,171 @@
+/* ===== CyberDesk OS — Kali-themed shell + shared tokens ===== */
+:root{
+  --accent:#2777ff;          /* Kali blue */
+  --accent-dark:#1b5fd0;
+  --accent-light:#5d9bff;
+  --win-bg:#ffffff;          /* website/app content stays light */
+  --win-chrome:#20242b;      /* dark Linux-style title bar */
+  --win-chrome-text:#e9edf2;
+  --win-border:#394049;
+  --text:#1b1b1b;
+  --text-dim:#5c5c5c;
+  --taskbar:#121419;         /* Kali/xfce dark panel */
+  --taskbar-text:#e9edf2;
+  --good:#107c10;
+  --bad:#c42b1c;
+  --warn:#9d5d00;
+  --mono:"Consolas","SF Mono","Cascadia Code",Menlo,monospace;
+  --sans:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+  --radius:7px;
+  --shadow:0 14px 44px rgba(0,0,0,.5);
+  --cur:url(../assets/cursor/cursor.svg) 3 2, auto;
+  --cur-link:url(../assets/cursor/link.svg) 6 2, pointer;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font-family:var(--sans);
+  color:var(--text);
+  overflow:hidden;
+  user-select:none;
+  background:#0b1020 url(../assets/img/kali-wallpaper.png) center center / cover no-repeat fixed;
+  cursor:var(--cur);
+}
+/* Parrot/Linux-style cursors */
+a,button,.btn,.desk-icon,.task-btn,#start,select,summary,[role="button"],.bz-tile,.bz-bm,.db-nb,.gr-del,.ce-edit-btn{cursor:var(--cur-link)}
+input:not([type="checkbox"]):not([type="radio"]),textarea{cursor:text}
+
+#desktop{position:fixed;inset:0 0 44px 0;overflow:hidden}
+
+/* ===== desktop icons ===== */
+#icons{position:absolute;top:18px;left:18px;display:flex;flex-direction:column;gap:6px;z-index:1}
+.desk-icon{
+  width:92px;padding:8px 4px;border-radius:6px;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:6px;border:1px solid transparent;
+}
+.desk-icon:hover{background:rgba(255,255,255,.12)}
+.desk-icon.sel{background:rgba(39,119,255,.4);border-color:rgba(255,255,255,.35)}
+.desk-icon .glyph{font-size:38px;line-height:1;filter:drop-shadow(0 2px 3px rgba(0,0,0,.5))}
+.desk-icon .glyph svg,.desk-icon .glyph img{width:42px;height:42px;display:block;object-fit:contain}
+.desk-icon .label{color:#fff;font-size:12.5px;text-shadow:0 1px 3px rgba(0,0,0,.95);word-break:break-word}
+
+/* ===== windows ===== */
+.window{
+  position:absolute;min-width:300px;min-height:180px;background:var(--win-bg);
+  border:1px solid var(--win-border);border-radius:var(--radius);box-shadow:var(--shadow);
+  display:flex;flex-direction:column;overflow:hidden;z-index:10;
+}
+.window.active{box-shadow:0 18px 56px rgba(0,0,0,.6);border-color:#4a515b}
+.window.maximized{border-radius:0}
+.win-title{
+  height:38px;flex:0 0 38px;background:var(--win-chrome);color:var(--win-chrome-text);
+  border-bottom:1px solid #2c313a;display:flex;align-items:center;gap:8px;padding:0 6px 0 12px;
+  cursor:grab;font-size:13px;
+}
+.win-title.drag{cursor:grabbing}
+.win-title .wt-icon{font-size:16px;line-height:1;display:flex;align-items:center}
+.win-title .wt-icon svg,.win-title .wt-icon img{width:17px;height:17px;object-fit:contain}
+.win-title .wt-name{flex:1;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.win-btn{width:36px;height:30px;border:0;background:transparent;cursor:var(--cur-link);border-radius:4px;font-size:13px;color:var(--win-chrome-text);display:flex;align-items:center;justify-content:center}
+.win-btn:hover{background:#363c45}
+.win-btn.close:hover{background:var(--bad);color:#fff}
+.win-body{flex:1;overflow:auto;background:var(--win-bg);position:relative}
+.win-resize{position:absolute;right:0;bottom:0;width:18px;height:18px;cursor:nwse-resize;z-index:6}
+.win-resize::after{content:"";position:absolute;right:3px;bottom:3px;width:8px;height:8px;border-right:2px solid #b9bfc7;border-bottom:2px solid #b9bfc7;opacity:.7}
+
+/* ===== taskbar (Kali/xfce panel) ===== */
+#taskbar{
+  position:fixed;left:0;right:0;bottom:0;height:44px;background:var(--taskbar);
+  border-top:2px solid var(--accent);
+  display:flex;align-items:center;gap:2px;padding:0 6px;z-index:9000;color:var(--taskbar-text);
+}
+#start{width:40px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:5px;font-size:18px;color:var(--accent-light)}
+#start:hover{background:#242831}
+#search{
+  flex:0 0 230px;height:30px;background:#1c1f26;border:1px solid #2b2f38;border-radius:16px;display:flex;align-items:center;
+  gap:8px;padding:0 12px;color:#8a909a;font-size:13px;margin:0 6px;
+}
+.task-apps{display:flex;gap:2px;flex:1}
+.task-btn{
+  height:34px;min-width:40px;padding:0 9px;display:flex;align-items:center;gap:7px;border-radius:5px;
+  font-size:13px;color:#e9edf2;border-bottom:2px solid transparent;
+}
+.task-btn:hover{background:#242831}
+.task-btn.open{background:#1d2129;border-bottom-color:var(--accent-light)}
+.task-btn .tb-icon{font-size:16px;display:flex;align-items:center}
+.task-btn .tb-icon svg,.task-btn .tb-icon img{width:17px;height:17px;object-fit:contain}
+#tray{display:flex;align-items:center;gap:14px;padding:0 10px;font-size:12px;color:#c6ccd4}
+#clock{text-align:right;line-height:1.25;cursor:default}
+
+/* ===== toasts ===== */
+#toasts{position:fixed;right:14px;bottom:56px;display:flex;flex-direction:column;gap:10px;z-index:99999}
+.toast{
+  min-width:240px;max-width:340px;background:#fff;border-left:5px solid var(--accent);
+  border-radius:6px;box-shadow:var(--shadow);padding:12px 14px;font-size:13.5px;color:#1b1b1b;
+  animation:toastIn .25s ease;
+}
+.toast.success{border-left-color:var(--good)}
+.toast.error{border-left-color:var(--bad)}
+.toast .tt{font-weight:700;margin-bottom:2px}
+@keyframes toastIn{from{transform:translateX(30px);opacity:0}to{transform:none;opacity:1}}
+
+/* ===== generic app helpers ===== */
+.btn{font-family:var(--sans);font-size:13px;padding:7px 14px;border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:5px;cursor:var(--cur-link)}
+.btn:hover{background:var(--accent-dark)}
+.btn.ghost{background:#fff;color:var(--accent)}
+.btn.ghost:hover{background:#eef4ff}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+input,select{font-family:var(--sans);font-size:13px}
+.flag-box{font-family:var(--mono);background:#0b2e13;color:#8ef0a0;padding:10px 12px;border-radius:6px;word-break:break-all;user-select:text}
+
+/* briefing + login modal */
+.brief-ov{position:absolute;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:50}
+.brief{background:#fff;max-width:440px;margin:16px;border-radius:10px;box-shadow:var(--shadow);overflow:hidden}
+.brief h3{margin:0;padding:14px 18px;background:var(--accent);color:#fff;font-size:15px}
+.brief .bd{padding:16px 18px;font-size:14px;line-height:1.5;color:#2a2a2a}
+.brief .ft{padding:0 18px 16px;text-align:right}
+
+/* ===== Kali boot sequence ===== */
+#bootscreen{position:fixed;inset:0;z-index:100001;background:#000;color:#cfe9d6;font-family:var(--mono);font-size:13.5px;padding:26px 22px;overflow:hidden;transition:opacity .4s ease}
+#bootscreen.out{opacity:0;pointer-events:none}
+#boot-log{white-space:pre-wrap;line-height:1.5}
+.boot-ln{animation:bootIn .12s ease}
+@keyframes bootIn{from{opacity:.2}to{opacity:1}}
+.boot-head{color:#5d9bff;font-weight:700;margin-bottom:6px}
+.boot-ok{color:#cfe9d6}
+.boot-ok::first-letter{color:#35d07a}
+.boot-dim{color:#8a948c}
+.boot-success{color:#35d07a;font-weight:700;margin-top:6px;text-shadow:0 0 10px rgba(53,208,122,.5)}
+
+/* ===== Kali lock / login screen ===== */
+#lockscreen{position:fixed;inset:0;z-index:100000;background:#0b0e14 url(../assets/img/kali-wallpaper.png) center center/cover no-repeat;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;transition:opacity .45s ease}
+#lockscreen::before{content:"";position:absolute;inset:0;background:rgba(8,10,16,.74)}
+#lockscreen.out{opacity:0;pointer-events:none}
+#lk-time{position:relative;text-align:center;color:#fff}
+#lk-time .lk-hm{font-size:48px;font-weight:300;letter-spacing:1px;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+#lk-time .lk-date{font-size:15px;color:#c3ccd8;margin-top:2px}
+.lk-card{position:relative;width:330px;max-width:90%;background:rgba(18,22,29,.92);border:1px solid #2b313b;border-radius:14px;padding:24px 24px 18px;display:flex;flex-direction:column;align-items:center;box-shadow:0 22px 64px rgba(0,0,0,.55)}
+.lk-card.shake{animation:lkShake .4s}
+@keyframes lkShake{10%,90%{transform:translateX(-2px)}30%,70%{transform:translateX(5px)}50%{transform:translateX(-7px)}}
+.lk-ava{width:74px;height:74px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;background:linear-gradient(135deg,#1d2a44,#24344f);box-shadow:0 0 0 3px rgba(39,119,255,.5);margin-bottom:10px}
+.lk-user{color:#fff;font-size:20px;font-weight:600}
+.lk-host{color:#8a929f;font-size:12px;margin-bottom:16px}
+.lk-input{width:100%;padding:10px 12px;margin-bottom:10px;background:#0e1219;border:1px solid #2b313b;border-radius:7px;color:#e9edf2;font-size:14px;font-family:var(--sans)}
+.lk-input:focus{outline:0;border-color:var(--accent);box-shadow:0 0 0 2px rgba(39,119,255,.25)}
+.lk-err{color:#ff7a6b;font-size:12.5px;min-height:16px;margin-bottom:6px;text-align:center}
+.lk-go{width:100%;padding:10px;background:var(--accent);color:#fff;border:0;border-radius:7px;font-size:14px;font-weight:700;cursor:var(--cur-link)}
+.lk-go:hover{background:var(--accent-dark)}
+.lk-hint{margin-top:12px;font-size:11.5px;color:#7f8793;background:rgba(255,255,255,.04);border-radius:6px;padding:7px 10px;text-align:center}
+
+/* ===== mr_hacker notifications (bottom-right story cards) ===== */
+#hacker-notes{position:fixed;right:14px;bottom:56px;display:flex;flex-direction:column;gap:12px;z-index:99998;width:330px;max-width:calc(100vw - 28px)}
+.hk-note{background:#0f141c;border:1px solid #243247;border-left:4px solid #35d07a;border-radius:9px;box-shadow:0 14px 40px rgba(0,0,0,.5);overflow:hidden;animation:hkIn .32s ease;font-family:var(--sans)}
+@keyframes hkIn{from{transform:translateX(26px);opacity:0}to{transform:none;opacity:1}}
+.hk-head{display:flex;align-items:center;gap:8px;padding:9px 12px;background:#121a24;border-bottom:1px solid #1e2a38}
+.hk-ava{width:26px;height:26px;border-radius:50%;background:#0b2e1a;display:flex;align-items:center;justify-content:center;font-size:14px}
+.hk-who{font-family:var(--mono);font-size:13px;color:#35d07a;font-weight:700;flex:1}
+.hk-dot{width:7px;height:7px;border-radius:50%;background:#35d07a;box-shadow:0 0 6px #35d07a}
+.hk-x{background:transparent;border:0;color:#7f8793;font-size:15px;cursor:var(--cur-link);padding:0 2px}
+.hk-x:hover{color:#fff}
+.hk-body{padding:11px 13px;color:#d3dae3;font-size:13px;line-height:1.5}
+.hk-body b{color:#fff}
